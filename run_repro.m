@@ -1,33 +1,27 @@
 function run_repro(mode)
-% RUN_REPRO — minimal, loud entrypoint.
-% Usage:
-%   run_repro            % single-seed smoke test (default)
-%   run_repro('single')  % same as above
-%   run_repro('multi')   % iterate over seedList() if present
+% RUN_REPRO 
+%   run_repro()  % iterate over seedList() 
 
-if nargin < 1 || isempty(mode), mode = 'single'; end
-fprintf('>> run_repro(%s) starting...\n', string(mode));
+
+fprintf('>> run_repro starting...\n');
 
 % Make results dir
-if ~exist('results','dir'), mkdir results; fprintf('  created ./results\n'); end
+    if ~exist('results','dir'), 
+    mkdir results;
+    fprintf('  created ./results\n');
+end
 
-switch lower(mode)
-    case 'single'
-        seeds = 12345;    % quick smoke test
-    case 'multi'
-        if exist('seedList.m','file') == 2
+
+     if exist('seedList.m','file') == 2
             seeds = seedList();
         else
             error('run_repro:NoSeedList', ...
-                'mode="multi" but seedList.m not found on path.');
+                but seedList.m not found on path.');
         end
-    otherwise
-        error('run_repro:BadMode','Unknown mode: %s', mode);
-end
 
 for s = seeds(:).'
     fprintf('\n[seed %d]\n', s);
-    rng(s);
+    rng(s, 'twister'); % Mersenne Twister (default)
 
     % 1) Config + schedule
     ex = config_bayesian_categorisation();
@@ -50,7 +44,7 @@ for s = seeds(:).'
     save(outFile, 'metrics', 'ex', 's');
     fprintf('  saved %s\n', outFile);
 
-    % 6) Console summary (short)
+    % 6) Console summary 
     names = fieldnames(metrics);
     for i = 1:numel(names)
         nm = names{i};
@@ -61,7 +55,9 @@ for s = seeds(:).'
             metrics.(nm).csi);
     end
 end
-% 7) (Optional) write a tiny CSV summary for last run
+
+
+% 7) Write a tiny CSV summary for last run
 try
     csvPath = fullfile('results','metrics_summary.csv');
     rows = {'seed','agent','accuracy','fitness','relative_adv','csi','auc'};
@@ -73,6 +69,7 @@ try
             metrics.(nm).regret, ...
             metrics.(nm).csi, ...
             metrics.(nm).roc_auc}; %#ok<AGROW>
+            
     end
     writecell(rows, csvPath);
     fprintf('  wrote summary CSV: %s\n', csvPath);
