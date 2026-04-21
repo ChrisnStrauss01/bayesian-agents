@@ -1,6 +1,16 @@
 # Bayesian Categorisation Agents (For MSc Dissertation)
 
+## DOIs
+
+**Code archive**
 [![DOI](https://zenodo.org/badge/1061586509.svg)](https://doi.org/10.5281/zenodo.17173916)
+
+**Related MSc dissertation**
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18201465.svg)](https://doi.org/10.5281/zenodo.18201465)
+
+Strauss, C. (2025). Adaptive Bayesian Inference Under Bounded Constraints: Agent-Based Modelling of Utility and Stability in Dynamic Environments. Zenodo. 
+
+---
 
 This repository reproduces the simulations reported in the MSc dissertation.  
 Agents A–D are evaluated on a 2AFC “threat vs. non-threat” task with asymmetric payoffs.  
@@ -31,4 +41,4 @@ run_repro('multi')
 
 ## If you use this code, please cite:
 
-Christopher Strauss. (2025). Bayesian Agents Simulation Code (MSc Dissertation) [Mac OS 15.6]. Zenodo. https://doi.org/10.5281/zenodo.17173916
+Christopher Strauss. (2025). Bayesian Agents Simulation Code (MSc Dissertation). Zenodo. https://doi.org/10.5281/zenodo.17173916
